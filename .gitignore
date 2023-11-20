@@ -128,3 +128,11 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+#custom
+deploy/postgres-data
+
+/build
+/public/build
+
+/src/db-seed/common-datasets/assets/data/img
