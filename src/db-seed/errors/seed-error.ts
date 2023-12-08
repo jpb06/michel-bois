@@ -1,4 +1,6 @@
-export type SeedErrorCode = 'orphans-found' | 'asset-not-found-in-seed-data';
+export type SeedErrorCode =
+  | 'document-orphan-found'
+  | 'document-not-found-in-seed-data';
 
 export class SeedError {
   readonly _tag = 'SeedError';
