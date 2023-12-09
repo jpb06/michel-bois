@@ -1,6 +1,6 @@
 import { Effect } from 'effect';
 
-import { createAssets } from './../common-datasets/assets/create-assets.task';
+import { createDocuments } from '../common-datasets/documents/create-documents.task';
 
 export const seedDevEnv = () =>
   Effect.gen(function* (_) {
@@ -8,7 +8,7 @@ export const seedDevEnv = () =>
 
     yield* _(
       Effect.all([
-        createAssets(),
+        createDocuments(),
         //...
       ]),
     );
