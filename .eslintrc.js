@@ -16,11 +16,10 @@ module.exports = {
 
   // Base config
   extends: ['eslint:recommended'],
-
   overrides: [
     // React
     {
-      files: ['**/*.{ts,tsx}'],
+      files: ['**/*.tsx'],
       parser: '@typescript-eslint/parser',
       parserOptions: {
         project: ['tsconfig.json'],
@@ -45,22 +44,56 @@ module.exports = {
         ],
       },
       rules: {
+        'import/order': [
+          'error',
+          {
+            alphabetize: { caseInsensitive: true, order: 'asc' },
+            groups: ['builtin', 'external', 'internal', 'parent', 'sibling'],
+            'newlines-between': 'always',
+          },
+        ],
         'react/jsx-no-leaked-render': [
           'warn',
           { validStrategies: ['ternary'] },
         ],
         '@typescript-eslint/consistent-type-exports': 'error',
         '@typescript-eslint/consistent-type-imports': 'error',
+        '@typescript-eslint/no-unused-vars': [
+          'warn',
+          {
+            varsIgnorePattern: '^_',
+            argsIgnorePattern: '^_',
+            caughtErrorsIgnorePattern: '^_',
+          },
+        ],
+        eqeqeq: 'error',
+        complexity: [
+          'error',
+          {
+            max: 15,
+          },
+        ],
+        'arrow-body-style': ['error', 'as-needed'],
+        'no-unneeded-ternary': 'error',
+        'prefer-arrow-callback': 'error',
+        'no-else-return': 'error',
+        'no-useless-return': 'error',
+        'array-callback-return': [
+          'error',
+          {
+            allowImplicit: true,
+          },
+        ],
       },
     },
 
     // Typescript
     {
-      files: ['**/*.{ts,tsx}'],
+      files: ['**/*.ts'],
       plugins: ['@stylistic/js', 'prettier', '@typescript-eslint', 'import'],
       parser: '@typescript-eslint/parser',
       settings: {
-        'import/internal-regex': '^~/',
+        'import/internal-regex': '^@(server|layers|client|@integrations|db)',
         'import/resolver': {
           node: {
             extensions: ['.ts', '.tsx'],
@@ -90,6 +123,32 @@ module.exports = {
         '@stylistic/js/semi': 'error',
         'prettier/prettier': 'error',
         curly: 'error',
+        '@typescript-eslint/no-unused-vars': [
+          'warn',
+          {
+            varsIgnorePattern: '^_',
+            argsIgnorePattern: '^_',
+            caughtErrorsIgnorePattern: '^_',
+          },
+        ],
+        eqeqeq: 'error',
+        complexity: [
+          'error',
+          {
+            max: 15,
+          },
+        ],
+        'arrow-body-style': ['error', 'as-needed'],
+        'no-unneeded-ternary': 'error',
+        'prefer-arrow-callback': 'error',
+        'no-else-return': 'error',
+        'no-useless-return': 'error',
+        'array-callback-return': [
+          'error',
+          {
+            allowImplicit: true,
+          },
+        ],
       },
     },
 
