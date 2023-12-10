@@ -16,12 +16,11 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": "./src",
     "paths": {
-      "@server": ["./server/index.ts"],
-      "@server/*": ["./server/*"],
-      "@server/integrations/database": [
-        "./server/integrations/database/index.ts"
-      ],
-      "@server/integrations/file-storage": [
+      "@client/*": ["./client/*"],
+      "@server/*": ["./server/remix/*"],
+      "@layers/*": ["./server/layers/*"],
+      "@integrations/database": ["./server/integrations/database/index.ts"],
+      "@integrations/file-storage": [
         "./server/integrations/file-storage/index.ts"
       ],
       "@db/seed": ["./db-seed/index.ts"]

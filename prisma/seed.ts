@@ -6,11 +6,8 @@ dotenv.config({
 });
 
 import { displaySeedErrors, seedDevEnv } from '@db/seed';
-import {
-  DatabaseLayer,
-  PrismaDatabaseLayerLive,
-} from '@server/layers/database';
-import { R2FileStorageLayerLive } from '@server/layers/file-storage';
+import { DatabaseLayer, PrismaDatabaseLayerLive } from '@layers/database';
+import { R2FileStorageLayerLive } from '@layers/file-storage';
 
 const task = pipe(
   seedDevEnv(),
