@@ -18,6 +18,8 @@
     "paths": {
       "@client/*": ["./client/*"],
       "@server/*": ["./server/remix/*"],
+      "@effect/*": ["./server/effect/*"],
+      "@domains/*": ["./server/domains/*"],
       "@layers/*": ["./server/layers/*"],
       "@integrations/database": ["./server/integrations/database/index.ts"],
       "@integrations/file-storage": [

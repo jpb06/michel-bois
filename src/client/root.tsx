@@ -9,6 +9,7 @@ import {
   ScrollRestoration,
 } from '@remix-run/react';
 
+import { TopMenu } from './components/top-menu/TopMenu';
 import stylesheet from './tailwind.css';
 
 export const links: LinksFunction = () => [
@@ -24,7 +25,8 @@ const App = () => (
       <Meta />
       <Links />
     </head>
-    <body className="h-full">
+    <body className="flex h-full w-full flex-col items-center">
+      <TopMenu />
       <Outlet />
       <ScrollRestoration />
       <Scripts />

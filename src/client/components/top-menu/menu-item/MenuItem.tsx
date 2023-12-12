@@ -1,12 +1,15 @@
 import { motion } from 'framer-motion';
 
+import { brandName } from '../constants/brand-name.constant';
+import type { MenuTextState } from '../TopMenu';
+
 type MenuItemProps = {
+  setMenuText: React.Dispatch<React.SetStateAction<MenuTextState>>;
   Icon: JSX.Element;
-  setMenuText: (text: string) => void;
   text: string;
 };
 
-export const MenuItem = ({ Icon, setMenuText, text }: MenuItemProps) => (
+export const MenuItem = ({ setMenuText, Icon, text }: MenuItemProps) => (
   <motion.div initial="rest" whileHover="hover" animate="rest">
     <motion.div
       transition={{
@@ -27,11 +30,11 @@ export const MenuItem = ({ Icon, setMenuText, text }: MenuItemProps) => (
         scale: 1.2,
         color: 'white',
       }}
-      onHoverStart={() => setMenuText(text)}
-      onHoverEnd={() => setMenuText('')}
+      onHoverStart={() => setMenuText({ text, isBrand: false })}
+      onHoverEnd={() => setMenuText({ text: brandName, isBrand: true })}
       className="flex flex-col items-center"
     >
-      <div className="mx-1 rounded-xl bg-teal-800 px-1">{Icon}</div>
+      <div className="mx-1 rounded-xl bg-teal-800 p-1">{Icon}</div>
     </motion.div>
   </motion.div>
 );
