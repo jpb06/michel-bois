@@ -13,7 +13,7 @@ export class ValidationError<T extends FieldValues> {
 
 export const handleForm = <T extends FieldValues>(
   request: Request,
-  resolver: Resolver,
+  resolver: Resolver<T>,
 ) =>
   Effect.gen(function* (_) {
     const {

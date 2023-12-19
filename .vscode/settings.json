@@ -28,7 +28,7 @@
   "less.validate": false,
   "scss.validate": false,
   "stylelint.validate": ["css", "scss"],
-  "typescript.preferences.importModuleSpecifier": "shortest",
+  "typescript.preferences.importModuleSpecifier": "relative",
   "[properties]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },

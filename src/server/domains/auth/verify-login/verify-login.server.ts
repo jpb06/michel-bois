@@ -1,6 +1,6 @@
 import { Effect } from 'effect';
 
-import { DatabaseLayer } from '@layers/database';
+import { DatabaseLayer } from '@layers';
 
 import { validatePassword } from './logic/validate-password.server';
 
