@@ -3,9 +3,9 @@ import { pipe, Config, Effect } from 'effect';
 
 const getR2Config = pipe(
   Effect.all([
-    Effect.config(Config.string('CLOUDFLARE_ACCOUNT_ID')),
-    Effect.config(Config.string('R2_DOCUMENTS_ACCESS_KEY_ID')),
-    Effect.config(Config.string('R2_DOCUMENTS_SECRET_ACCESS_KEY')),
+    Config.string('CLOUDFLARE_ACCOUNT_ID'),
+    Config.string('R2_DOCUMENTS_ACCESS_KEY_ID'),
+    Config.string('R2_DOCUMENTS_SECRET_ACCESS_KEY'),
   ]),
   Effect.map(([cloudflareAccountId, accessKeyId, secretAccessKey]) => ({
     cloudflareAccountId,
@@ -30,10 +30,7 @@ export const fileStorageProvider = pipe(
   ),
 );
 
-export const assetsBucket = Effect.config(
-  Config.string('R2_DOCUMENT_ASSETS_BUCKET_NAME'),
-);
-
-export const placeholdersBucket = Effect.config(
-  Config.string('R2_DOCUMENT_PLACEHOLDERS_BUCKET_NAME'),
+export const assetsBucket = Config.string('R2_DOCUMENT_ASSETS_BUCKET_NAME');
+export const placeholdersBucket = Config.string(
+  'R2_DOCUMENT_PLACEHOLDERS_BUCKET_NAME',
 );

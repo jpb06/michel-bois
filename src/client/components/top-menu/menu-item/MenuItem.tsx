@@ -1,12 +1,17 @@
+import { Link } from '@remix-run/react';
 import { motion } from 'framer-motion';
 
+import { brandName } from '../constants/brand-name.constant';
+import type { MenuTextState } from '../TopMenu';
+
 type MenuItemProps = {
+  setMenuText: React.Dispatch<React.SetStateAction<MenuTextState>>;
   Icon: JSX.Element;
-  setMenuText: (text: string) => void;
   text: string;
+  to: string;
 };
 
-export const MenuItem = ({ Icon, setMenuText, text }: MenuItemProps) => (
+export const MenuItem = ({ to, setMenuText, Icon, text }: MenuItemProps) => (
   <motion.div initial="rest" whileHover="hover" animate="rest">
     <motion.div
       transition={{
@@ -27,11 +32,15 @@ export const MenuItem = ({ Icon, setMenuText, text }: MenuItemProps) => (
         scale: 1.2,
         color: 'white',
       }}
-      onHoverStart={() => setMenuText(text)}
-      onHoverEnd={() => setMenuText('')}
+      onHoverStart={() => setMenuText({ text, isBrand: false })}
+      onHoverEnd={() => setMenuText({ text: brandName, isBrand: true })}
       className="flex flex-col items-center"
     >
-      <div className="mx-1 rounded-xl bg-teal-800 px-1">{Icon}</div>
+      <Link to={to}>
+        <div className="mx-1 rounded-xl bg-sky-800 p-1 text-teal-600">
+          {Icon}
+        </div>
+      </Link>
     </motion.div>
   </motion.div>
 );

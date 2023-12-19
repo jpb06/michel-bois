@@ -1,9 +1,8 @@
 import type { ConfigError, Effect } from 'effect';
 import { Context } from 'effect';
 
-import { tapLayer } from '@layers/tapLayer.effect';
-
 import type { AppError } from '../../../errors/application-error';
+import { tapLayer } from '../../effects/tapLayer.effect';
 import type { UploadFileArgs } from '../r2/implementations';
 import type { Bucket } from '../r2/types/bucket.type';
 

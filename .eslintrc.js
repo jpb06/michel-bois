@@ -13,7 +13,6 @@ module.exports = {
     commonjs: true,
     es6: true,
   },
-
   // Base config
   extends: ['eslint:recommended'],
   overrides: [
@@ -24,7 +23,7 @@ module.exports = {
       parserOptions: {
         project: ['tsconfig.json'],
       },
-      plugins: ['react', '@typescript-eslint', 'jsx-a11y'],
+      plugins: ['react', '@typescript-eslint', 'import', 'jsx-a11y'],
       extends: [
         'plugin:react/recommended',
         'plugin:react/jsx-runtime',
@@ -32,6 +31,7 @@ module.exports = {
         'plugin:jsx-a11y/recommended',
         'prettier',
         'plugin:@typescript-eslint/recommended',
+        'plugin:import/typescript',
       ],
       settings: {
         react: {
@@ -50,6 +50,15 @@ module.exports = {
             alphabetize: { caseInsensitive: true, order: 'asc' },
             groups: ['builtin', 'external', 'internal', 'parent', 'sibling'],
             'newlines-between': 'always',
+            pathGroups: [
+              {
+                pattern:
+                  '{@client/**,@effects,@domains/**,@layers,@layers/types,@data-seeding}',
+                group: 'internal',
+                position: 'before',
+              },
+            ],
+            pathGroupsExcludedImportTypes: ['builtin'],
           },
         ],
         'react/jsx-no-leaked-render': [
@@ -73,11 +82,18 @@ module.exports = {
             max: 15,
           },
         ],
+        curly: 'error',
         'arrow-body-style': ['error', 'as-needed'],
         'no-unneeded-ternary': 'error',
         'prefer-arrow-callback': 'error',
         'no-else-return': 'error',
         'no-useless-return': 'error',
+        'no-console': [
+          'error',
+          {
+            allow: ['warn', 'error', 'info'],
+          },
+        ],
         'array-callback-return': [
           'error',
           {
@@ -91,9 +107,11 @@ module.exports = {
     {
       files: ['**/*.ts'],
       plugins: ['@stylistic/js', 'prettier', '@typescript-eslint', 'import'],
+      extends: ['plugin:import/typescript'],
       parser: '@typescript-eslint/parser',
       settings: {
-        'import/internal-regex': '^@(server|layers|client|@integrations|db)',
+        'import/internal-regex':
+          '^@(client/|@effects|@domains/|@layers|@layers/types|@data-seeding)',
         'import/resolver': {
           node: {
             extensions: ['.ts', '.tsx'],
@@ -118,11 +136,19 @@ module.exports = {
             alphabetize: { caseInsensitive: true, order: 'asc' },
             groups: ['builtin', 'external', 'internal', 'parent', 'sibling'],
             'newlines-between': 'always',
+            pathGroups: [
+              {
+                pattern:
+                  '{@client/**,@effects,@domains/**,@layers,@layers/types,@data-seeding}',
+                group: 'internal',
+                position: 'before',
+              },
+            ],
+            pathGroupsExcludedImportTypes: ['builtin'],
           },
         ],
         '@stylistic/js/semi': 'error',
         'prettier/prettier': 'error',
-        curly: 'error',
         '@typescript-eslint/no-unused-vars': [
           'warn',
           {
@@ -138,11 +164,18 @@ module.exports = {
             max: 15,
           },
         ],
+        curly: 'error',
         'arrow-body-style': ['error', 'as-needed'],
         'no-unneeded-ternary': 'error',
         'prefer-arrow-callback': 'error',
         'no-else-return': 'error',
         'no-useless-return': 'error',
+        'no-console': [
+          'error',
+          {
+            allow: ['warn', 'error', 'info'],
+          },
+        ],
         'array-callback-return': [
           'error',
           {

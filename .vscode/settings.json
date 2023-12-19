@@ -2,7 +2,7 @@
   "eslint.run": "onSave",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll": true
+    "source.fixAll": "explicit"
   },
   "editor.tabSize": 2,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -28,7 +28,7 @@
   "less.validate": false,
   "scss.validate": false,
   "stylelint.validate": ["css", "scss"],
-  "typescript.preferences.importModuleSpecifier": "shortest",
+  "typescript.preferences.importModuleSpecifier": "relative",
   "[properties]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
