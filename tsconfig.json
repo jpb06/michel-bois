@@ -19,6 +19,7 @@
       "@client/components": ["./client/components/index.ts"],
       "@client/hooks": ["./client/hooks/index.ts"],
       "@client/logic": ["./client/logic/index.ts"],
+      "@client/motion": ["./client/motion/index.ts"],
       "@client/types": ["./client/types/index.ts"],
       "@effects": ["./server/effect/index.server.ts"],
       "@domains/auth": ["./server/domains/auth/index.server.ts"],

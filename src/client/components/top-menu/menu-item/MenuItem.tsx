@@ -1,6 +1,7 @@
 import { Link } from '@remix-run/react';
 import { motion } from 'framer-motion';
 
+import { defaultTransition } from '../../../motion/default-transition.motion';
 import { brandName } from '../constants/brand-name.constant';
 import type { MenuTextState } from '../TopMenu';
 
@@ -14,12 +15,7 @@ type MenuItemProps = {
 export const MenuItem = ({ to, setMenuText, Icon, text }: MenuItemProps) => (
   <motion.div initial="rest" whileHover="hover" animate="rest">
     <motion.div
-      transition={{
-        duration: 0.3,
-        type: 'spring',
-        stiffness: 400,
-        damping: 17,
-      }}
+      transition={defaultTransition}
       whileHover={{
         scale: 1.7,
         marginTop: '1.2rem',

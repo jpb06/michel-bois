@@ -5,7 +5,7 @@
  */
 
 import type { EntryContext } from '@remix-run/node';
-import isbot from 'isbot';
+import { isbot } from 'isbot';
 
 import { handleBotRequest } from './server/remix/entry/handle-bot-request';
 import { handleBrowserRequest } from './server/remix/entry/handle-browser-request';
