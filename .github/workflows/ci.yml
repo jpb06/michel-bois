@@ -1,4 +1,4 @@
-name: ci
+name: ✅ Integration checks
 
 on:
   push:
@@ -6,37 +6,59 @@ on:
       - main
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  actions: write
+  contents: read
+
 jobs:
-  tests:
+  lint:
+    name: ⬣ ESLint
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.12.0
-        with:
-          access_token: ${{ github.token }}
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
 
-      - name: Check out repository code
-        uses: actions/checkout@v3
-        with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting
-          fetch-depth: 0
-
-      - uses: pnpm/action-setup@v2.4.0
-        with:
-          version: latest
-
-      - name: Setup node
+      - name: ⎔ Setup node
         uses: actions/setup-node@v4
         with:
           node-version-file: '.node-version'
           cache: 'pnpm'
+          cache-dependency-path: ./package.json
 
-      - name: Installing dependencies
+      - uses: 📦 pnpm/action-setup@v2.4.0
+        with:
+          version: latest
+
+      - name: 📥 Install deps
         run: pnpm install --frozen-lockfile
 
-      - name: Linting
+      - name: 🔬 Lint
         run: pnpm lint
 
-      - name: Types check
+  typecheck:
+    name: ʦ TypeScript
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.node-version'
+          cache: 'pnpm'
+          cache-dependency-path: ./package.json
+
+      - uses: 📦 pnpm/action-setup@v2.4.0
+        with:
+          version: latest
+
+      - name: 📥 Install deps
+        run: pnpm install --frozen-lockfile
+
+      - name: 🔎 Type check
         run: pnpm type-check
