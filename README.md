@@ -36,3 +36,9 @@ fly postgres attach --app michel-bois-app <db-app>
 
 fly deploy
 ```
+
+## fly db
+
+```bash
+flyctl proxy 5432 -a <db-app>
+```

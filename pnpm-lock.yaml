@@ -17,9 +17,12 @@ dependencies:
   '@hookform/resolvers':
     specifier: ^3.3.4
     version: 3.3.4(react-hook-form@7.49.3)
+  '@iconify/react':
+    specifier: ^4.1.1
+    version: 4.1.1(react@18.2.0)
   '@isaacs/express-prometheus-middleware':
     specifier: ^1.2.1
-    version: 1.2.1(express@4.18.2)(prom-client@13.2.0)
+    version: 1.2.1(express@4.18.2)(prom-client@15.1.0)
   '@prisma/client':
     specifier: ^5.8.1
     version: 5.8.1(prisma@5.8.1)
@@ -112,9 +115,6 @@ dependencies:
     version: 3.22.4
 
 devDependencies:
-  '@iconify/react':
-    specifier: ^4.1.1
-    version: 4.1.1(react@18.2.0)
   '@remix-run/dev':
     specifier: ^2.5.1
     version: 2.5.1(@types/node@20.11.5)(ts-node@10.9.2)(typescript@5.3.3)
@@ -232,6 +232,9 @@ devDependencies:
   prisma:
     specifier: ^5.8.1
     version: 5.8.1
+  prom-client:
+    specifier: ^15.1.0
+    version: 15.1.0
   readme-package-icons:
     specifier: ^1.1.10
     version: 1.1.10
@@ -1770,11 +1773,11 @@ packages:
     dependencies:
       '@iconify/types': 2.0.0
       react: 18.2.0
-    dev: true
+    dev: false
 
   /@iconify/types@2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
-    dev: true
+    dev: false
 
   /@img/sharp-darwin-arm64@0.33.2:
     resolution: {integrity: sha512-itHBs1rPmsmGF9p4qRe++CzCgd+kFYktnsoR1sbIAfsRMrJZau0Tt1AH9KVnufc2/tU02Gf6Ibujx+15qRE03w==}
@@ -1976,14 +1979,14 @@ packages:
       wrap-ansi-cjs: /wrap-ansi@7.0.0
     dev: true
 
-  /@isaacs/express-prometheus-middleware@1.2.1(express@4.18.2)(prom-client@13.2.0):
+  /@isaacs/express-prometheus-middleware@1.2.1(express@4.18.2)(prom-client@15.1.0):
     resolution: {integrity: sha512-l+5S2vC6DvOhrFBwsTr4U4lhLESivDhg56DaDscdu5mtL+xfk/hdNoYOIhBO9Z8Q9dpUtnGyU5dchG44nrQBQA==}
     peerDependencies:
       express: 4.x
       prom-client: '>= 10.x <= 13.x'
     dependencies:
       express: 4.18.2
-      prom-client: 13.2.0
+      prom-client: 15.1.0
       response-time: 2.3.2
       url-value-parser: 2.2.0
     dev: false
@@ -2253,6 +2256,10 @@ packages:
     dependencies:
       which: 3.0.1
     dev: true
+
+  /@opentelemetry/api@1.7.0:
+    resolution: {integrity: sha512-AdY5wvN0P2vXBi3b29hxZgSFvdhdxPB9+f0B6s//P9Q8nibRWeA3cHm8UmLpio9ABigkVHJ5NMPk+Mz8VCCyrw==}
+    engines: {node: '>=8.0.0'}
 
   /@phc/format@1.0.0:
     resolution: {integrity: sha512-m7X9U6BG2+J+R1lSOdCiITLLrxm+cWlNI3HUFA92oLO77ObGNzaKdh8pMLqdZcshtkKuV84olNNXDfMc4FezBQ==}
@@ -4196,7 +4203,6 @@ packages:
 
   /bintrees@1.0.2:
     resolution: {integrity: sha512-VOMgTMwjAaUG580SXn3LacVgjurrbMme7ZZNYGSSV7mmtY6QQRh0Eg3pwIcntQ77DErK1L0NxkbetjcoXzVwKw==}
-    dev: false
 
   /bl@4.1.0:
     resolution: {integrity: sha512-1W07cM9gS6DcLperZfFSj+bWLtaPGSOHWhPiGzXmvVJbRLdG82sH/Kn8EtW1VqWVA54AKf2h5k5BbnIbwF3h6w==}
@@ -8528,12 +8534,12 @@ packages:
     resolution: {integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==}
     engines: {node: '>= 0.6.0'}
 
-  /prom-client@13.2.0:
-    resolution: {integrity: sha512-wGr5mlNNdRNzEhRYXgboUU2LxHWIojxscJKmtG3R8f4/KiWqyYgXTLHs0+Ted7tG3zFT7pgHJbtomzZ1L0ARaQ==}
-    engines: {node: '>=10'}
+  /prom-client@15.1.0:
+    resolution: {integrity: sha512-cCD7jLTqyPdjEPBo/Xk4Iu8jxjuZgZJ3e/oET3L+ZwOuap/7Cw3dH/TJSsZKs1TQLZ2IHpIlRAKw82ef06kmMw==}
+    engines: {node: ^16 || ^18 || >=20}
     dependencies:
+      '@opentelemetry/api': 1.7.0
       tdigest: 0.1.2
-    dev: false
 
   /promise-inflight@1.0.1:
     resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
@@ -8712,6 +8718,7 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
+    dev: false
 
   /read-cache@1.0.0:
     resolution: {integrity: sha512-Owdv/Ft7IjOgm/i0xvNDZ1LrRANRfew4b2prF3OWMQLxLfu3bS8FVhCsrSCMK4lR56Y9ya+AThoTpDCTxCmpRA==}
@@ -9651,7 +9658,6 @@ packages:
     resolution: {integrity: sha512-+G0LLgjjo9BZX2MfdvPfH+MKLCrxlXSYec5DaPYP1fe6Iyhf0/fSmJ0bFiZ1F8BT6cGXl2LpltQptzjXKWEkKA==}
     dependencies:
       bintrees: 1.0.2
-    dev: false
 
   /term-img@5.0.0:
     resolution: {integrity: sha512-Wpi50MA7bJwJKi5bVYu/t+xu9kNqesdzg6gWHOh3+1R9NRx1LmYoCMly9bUiabMZPNPH3juT8lOhZxUYxPEIBw==}
