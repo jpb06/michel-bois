@@ -1,10 +1,11 @@
-import { Icon } from '@iconify/react';
+import { Link } from '@remix-run/react';
 import { useState } from 'react';
 
 import { useOptionalUser } from '@client/hooks';
 
 import { brandName } from './constants/brand-name.constant';
 import { MenuItem } from './menu-item/MenuItem';
+import { PageTitle } from './page-title/PageTitle';
 
 export type MenuTextState = {
   text: string;
@@ -20,43 +21,46 @@ export const TopMenu = () => {
   });
 
   return (
-    <div className="sticky top-0 z-[100] flex h-[60px] min-h-[60px] flex-col rounded-b-3xl bg-sky-700 p-1 px-7 opacity-90">
-      <div className="flex h-full flex-col justify-between">
-        <div
-          className={`min-h-full select-none text-center text-lg ${
-            isBrand ? 'text-sky-200 underline' : 'text-white'
-          }`}
-        >
-          {text}
-        </div>
-        <div className="-m-4 flex flex-row self-center">
-          <MenuItem
-            Icon={<Icon icon="mynaui:image" className="h-12 w-12" />}
-            text="Oeuvres Michel Bois"
-            setMenuText={setMenuText}
-            to="/documents"
-          />
-          <MenuItem
-            Icon={<Icon icon="fa-solid:blog" className="h-12 w-12" />}
-            text="Blog"
-            setMenuText={setMenuText}
-            to="/blog"
-          />
-          {user ? (
+    <div>
+      <PageTitle />
+      <div className="sticky top-0 z-[100] flex h-[60px] min-h-[60px] flex-col rounded-b-3xl bg-gradient-to-b from-sky-800 to-cyan-700 p-1 px-7 opacity-90">
+        <div className="flex h-full flex-col justify-between">
+          <div
+            className={`min-h-full select-none text-center text-lg ${
+              isBrand ? 'text-sky-200 underline' : 'text-white'
+            }`}
+          >
+            {text === brandName ? <Link to="/">{text}</Link> : text}
+          </div>
+          <div className="-m-4 flex flex-row self-center">
             <MenuItem
-              Icon={<Icon icon="mdi:ticket-user" className="h-12 w-12" />}
-              text="Profil"
+              icon="mynaui:image"
+              text="Oeuvres Michel Bois"
               setMenuText={setMenuText}
-              to="/profile"
+              to="/documents"
             />
-          ) : (
             <MenuItem
-              Icon={<Icon icon="majesticons:login" className="h-12 w-12" />}
-              text="Login / Signup"
+              icon="fa-solid:blog"
+              text="Blog"
               setMenuText={setMenuText}
-              to="/login"
+              to="/blog"
             />
-          )}
+            {user ? (
+              <MenuItem
+                icon="mdi:ticket-user"
+                text="Profil"
+                setMenuText={setMenuText}
+                to="/profile"
+              />
+            ) : (
+              <MenuItem
+                icon="majesticons:login"
+                text="Login / Signup"
+                setMenuText={setMenuText}
+                to="/login"
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>

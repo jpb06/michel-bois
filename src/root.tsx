@@ -37,7 +37,9 @@ const App = () => (
     lang="en"
     className="hero min-h-screen"
     style={{
-      backgroundImage: `url("/splashscreen.jpg")`,
+      background:
+        "linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)),url('/splashscreen.jpg')",
+      backgroundSize: 'cover',
     }}
   >
     <head>
@@ -54,7 +56,9 @@ const App = () => (
         limit={2}
         closeButton={CloseButton}
       />
-      <Outlet />
+      <div className="mt-24 flex flex-col">
+        <Outlet />
+      </div>
       <ScrollRestoration />
       <Scripts />
       <LiveReload />

@@ -34,15 +34,21 @@ export const NewPasswordInput = <T extends FieldValues>(
   return (
     // eslint-disable-next-line jsx-a11y/label-has-associated-control
     <label className="form-control w-full">
-      <div className="label pt-0">
-        <span className="label-text">{props.topLeftLabel}</span>
-        <span className="label-text-alt">{props.topRightLabel}</span>
+      <div className="label -m-1">
+        <span
+          className={`label-text ${fieldState?.error ? 'text-error' : 'text-accent'}`}
+        >
+          {props.topLeftLabel}
+        </span>
+        <span className="label-text-alt text-accent">
+          {props.topRightLabel}
+        </span>
       </div>
       <motion.div whileTap={{ scale: 1.005 }} className="flex flex-row">
         <input
           type={visible ? 'text' : 'password'}
-          className={`input input-bordered w-full pr-14 ${
-            fieldState?.error ? 'border-2 border-red-400' : ''
+          className={`input input-bordered  w-full pr-14 ${
+            fieldState?.error ? 'input-error' : 'input-accent'
           }`}
           placeholder={props.placeholder}
           onChange={(e) => {
@@ -55,10 +61,10 @@ export const NewPasswordInput = <T extends FieldValues>(
         <Icon
           icon={visible ? 'mdi:eye' : 'mdi:eye-off'}
           onClick={toggleVisibility}
-          className="-ml-12 mt-1 h-10 w-10 cursor-pointer border-l-2 border-gray-600 pl-2"
+          className="-ml-12 mt-1 h-10 w-10 cursor-pointer border-l-2 border-gray-600 pl-2 text-accent"
         />
       </motion.div>
-      <div className="label">
+      <div className="label -m-1">
         <span className="label-text-alt" />
         <span className="label-text-alt text-error">
           {fieldState?.error?.message}

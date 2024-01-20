@@ -1,6 +1,6 @@
 import { Effect } from 'effect';
 
-import { UserId } from 'common/types';
+import { UserId } from 'common/zod.types';
 
 import { prisma, tryQuery } from '../internal';
 

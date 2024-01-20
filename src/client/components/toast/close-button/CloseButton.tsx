@@ -1,5 +1,8 @@
 import { Icon } from '@iconify/react';
-import type { CloseButtonProps } from 'react-toastify';
+
+type CloseButtonProps = {
+  closeToast: (e: React.MouseEvent<HTMLElement>) => void;
+};
 
 export const CloseButton = ({
   closeToast,

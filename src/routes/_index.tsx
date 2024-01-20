@@ -1,6 +1,8 @@
 import type { MetaFunction } from '@remix-run/node';
 
+import { Card } from '@client/components';
+
 export const meta: MetaFunction = () => [{ title: 'jpb06' }];
 
-const Index = () => <div className="mt-20 h-[2000px] w-full">cool</div>;
+const Index = () => <Card>Welcome</Card>;
 export default Index;

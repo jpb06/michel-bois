@@ -1,3 +1,4 @@
+import { Icon, type IconifyIcon } from '@iconify/react';
 import { Link } from '@remix-run/react';
 import { motion } from 'framer-motion';
 
@@ -5,38 +6,41 @@ import { defaultTransition } from '../../../motion/default-transition.motion';
 import { brandName } from '../constants/brand-name.constant';
 import type { MenuTextState } from '../TopMenu';
 
+import { useCurrentRouteAnimation } from './hooks/useCurrentRouteAnimation';
+import {
+  hoverMenuItemState,
+  idleMenuItemState,
+  selectedMenuItemState,
+  tapMenuItemState,
+} from './logic/animation-states';
+
 type MenuItemProps = {
   setMenuText: React.Dispatch<React.SetStateAction<MenuTextState>>;
-  Icon: JSX.Element;
+  icon: string | IconifyIcon;
   text: string;
   to: string;
 };
 
-export const MenuItem = ({ to, setMenuText, Icon, text }: MenuItemProps) => (
-  <motion.div initial="rest" whileHover="hover" animate="rest">
+export const MenuItem = ({ to, setMenuText, icon, text }: MenuItemProps) => {
+  const { scope, isActive } = useCurrentRouteAnimation(to);
+
+  return (
     <motion.div
+      ref={scope}
       transition={defaultTransition}
-      whileHover={{
-        scale: 1.7,
-        marginTop: '1.2rem',
-        marginLeft: '0.6rem',
-        marginRight: '0.6rem',
-        paddingLeft: '0.5rem',
-        paddingRight: '0.5rem',
-      }}
-      whileTap={{
-        scale: 1.2,
-        color: 'white',
-      }}
+      initial={isActive ? selectedMenuItemState : idleMenuItemState}
+      whileHover={hoverMenuItemState}
+      whileTap={tapMenuItemState}
       onHoverStart={() => setMenuText({ text, isBrand: false })}
       onHoverEnd={() => setMenuText({ text: brandName, isBrand: true })}
-      className="flex flex-col items-center"
     >
-      <Link to={to}>
-        <div className="mx-1 rounded-xl bg-sky-800 p-1 text-teal-600">
-          {Icon}
+      <Link to={to} className='className="flex items-center" flex-col'>
+        <div
+          className={`m-1 ${isActive ? 'rainbow-gradiant-border' : 'to-bg-sky-800 border-2 border-sky-900 bg-gradient-to-b from-cyan-900 hover:border-0 hover:text-white'} rounded-xl  p-1 ${isActive ? 'text-white' : 'text-emerald-400'} hover:bg-sky-900 hover:text-emerald-500`}
+        >
+          <Icon icon={icon} className="m-2 h-6 w-6" />
         </div>
       </Link>
     </motion.div>
-  </motion.div>
-);
+  );
+};
