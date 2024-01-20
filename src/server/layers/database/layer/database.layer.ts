@@ -1,7 +1,7 @@
 import type { Effect } from 'effect';
 import { Context } from 'effect';
 
-import { UserId } from 'common/types';
+import { UserId } from 'common/zod.types';
 
 import { tapLayer } from '../../effects/tapLayer.effect';
 import type {

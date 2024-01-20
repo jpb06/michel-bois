@@ -26,8 +26,12 @@ export const Input = <T extends FieldValues>(props: InputProps<T>) => {
   return (
     // eslint-disable-next-line jsx-a11y/label-has-associated-control
     <label className="form-control w-full">
-      <div className="label pt-0">
-        <span className="label-text">{props.topLeftLabel}</span>
+      <div className="label -m-1">
+        <span
+          className={`label-text ${fieldState?.error ? 'text-error' : 'text-accent'}`}
+        >
+          {props.topLeftLabel}
+        </span>
         <span className="label-text-alt">{props.topRightLabel}</span>
       </div>
       <motion.input
@@ -37,14 +41,14 @@ export const Input = <T extends FieldValues>(props: InputProps<T>) => {
         onChange={(e) => {
           onChange(e.target.value);
         }}
-        className={`input input-bordered w-full ${
-          fieldState?.error ? 'border-2 border-red-400' : ''
+        className={`input input-bordered  w-full ${
+          fieldState?.error ? 'input-error' : 'input-accent'
         }`}
         value={value}
         ref={ref}
         {...otherFieldProps}
       />
-      <div className="label">
+      <div className="label -m-1">
         <span className="label-text-alt" />
         <span className="label-text-alt text-error">
           {fieldState?.error?.message}

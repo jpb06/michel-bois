@@ -1,9 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as zod from 'zod';
 
+import { zodPassword } from '../../../common/zod.types';
+
 export const loginFormSchema = zod.object({
   email: zod.string().email(),
-  password: zod.string().min(1),
+  password: zodPassword,
   redirectTo: zod.string().optional(),
 });
 
