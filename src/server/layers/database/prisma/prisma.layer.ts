@@ -9,6 +9,7 @@ import type { DocumentInput } from './documents/persist-document.db';
 import { persistDocument } from './documents/persist-document.db';
 import { prisma } from './internal/prisma.instance';
 import { tryQuery } from './internal/try-query.effect';
+import { countUsers } from './users/countUsers.db';
 import { findUserByEmail } from './users/findUserByEmail.db';
 import { findUserById } from './users/findUserById.db';
 import { persistPassword } from './users/persistPassword.db';
@@ -26,6 +27,7 @@ export const PrismaDatabaseLayerLive = Layer.succeed(
       persistPassword(userId, hash),
     findUserById: (id: UserId) => findUserById(id),
     findUserByEmail: (email: string) => findUserByEmail(email),
+    countUsers: () => countUsers(),
     // -----------------------------------------------------------------------
     // Documents
     persistDocument: (data: DocumentInput) => persistDocument(data),

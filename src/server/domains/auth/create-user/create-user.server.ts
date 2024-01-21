@@ -11,13 +11,13 @@ interface CreateUserTaskArgs {
 export const createUserTask = ({ name, email, password }: CreateUserTaskArgs) =>
   Effect.gen(function* (_) {
     const user = yield* _(
-      DatabaseLayer.users.persistUser({
+      DatabaseLayer.users.create({
         name,
         email,
         emailVerified: false,
       }),
     );
-    yield* _(DatabaseLayer.users.persistPassword(user.id, password));
+    yield* _(DatabaseLayer.users.setPassword(user.id, password));
 
     return user;
   });
