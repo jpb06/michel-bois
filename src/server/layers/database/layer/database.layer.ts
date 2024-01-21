@@ -9,6 +9,7 @@ import type {
   persistDocument,
 } from '../prisma/documents/persist-document.db';
 import type { DbError } from '../prisma/internal/try-query.effect';
+import { countUsers } from '../prisma/users/countUsers.db';
 import { findUserByEmail } from '../prisma/users/findUserByEmail.db';
 import { findUserById } from '../prisma/users/findUserById.db';
 import { persistPassword } from '../prisma/users/persistPassword.db';
@@ -21,6 +22,7 @@ export interface Database {
   persistPassword: typeof persistPassword;
   findUserById: typeof findUserById;
   findUserByEmail: typeof findUserByEmail;
+  countUsers: typeof countUsers;
   // documents
   persistDocument: typeof persistDocument;
   //
@@ -32,14 +34,15 @@ export const DatabaseLayer = {
   disconnect: () => tapLayer(DatabaseLayerContext, (db) => db.disconnect()),
   // -----------------------------------------------------------------------
   users: {
-    persistUser: (data: PersistUserInput) =>
+    create: (data: PersistUserInput) =>
       tapLayer(DatabaseLayerContext, (db) => db.persistUser(data)),
-    persistPassword: (userId: UserId, hash: string) =>
+    setPassword: (userId: UserId, hash: string) =>
       tapLayer(DatabaseLayerContext, (db) => db.persistPassword(userId, hash)),
     findById: (id: UserId) =>
       tapLayer(DatabaseLayerContext, (db) => db.findUserById(id)),
     findByEmail: (email: string) =>
       tapLayer(DatabaseLayerContext, (db) => db.findUserByEmail(email)),
+    count: () => tapLayer(DatabaseLayerContext, (db) => db.countUsers()),
   },
   // -----------------------------------------------------------------------
   documents: {
