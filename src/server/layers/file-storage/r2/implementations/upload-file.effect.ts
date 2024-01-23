@@ -1,13 +1,14 @@
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { Effect } from 'effect';
 
-import { AppError } from '../../../../errors/application-error';
+import { tryPromise } from '@effects';
+
 import { fileStorageProvider } from '../providers/fileStorageProvider';
 import type { Bucket } from '../types/bucket.type';
 
-import { getBucket } from './get-bucket';
+import { getBucket } from './get-bucket.effect';
 
-export interface UploadFileArgs {
+export interface UploadFileInput {
   bucketName: Bucket;
   key: string;
   data: Buffer;
@@ -19,7 +20,7 @@ export const uploadFile = ({
   key,
   data,
   contentType,
-}: UploadFileArgs) =>
+}: UploadFileInput) =>
   Effect.gen(function* (_) {
     const [provider, bucket] = yield* _(
       Effect.all([fileStorageProvider, getBucket(bucketName)], {
@@ -28,17 +29,16 @@ export const uploadFile = ({
     );
 
     yield* _(
-      Effect.tryPromise({
-        try: () =>
-          provider.send(
-            new PutObjectCommand({
-              Body: data,
-              ContentType: contentType,
-              Key: key,
-              Bucket: bucket,
-            }),
-          ),
-        catch: AppError.fromError('UploadFileError'),
-      }),
+      tryPromise(
+        provider.send(
+          new PutObjectCommand({
+            Body: data,
+            ContentType: contentType,
+            Key: key,
+            Bucket: bucket,
+          }),
+        ),
+        'UploadFileError',
+      ),
     );
   });

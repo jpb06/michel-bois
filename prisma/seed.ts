@@ -5,7 +5,8 @@ dotenv.config({
   silent: true,
 });
 
-import { displaySeedErrors, seedDevEnv } from '@data-seeding';
+import { seedDevEnv } from '@domains/seeding';
+import { displayEffectErrors } from '@effects';
 import {
   DatabaseLayer,
   PrismaDatabaseLayerLive,
@@ -19,5 +20,5 @@ const task = pipe(
 );
 
 Effect.runPromise(task).catch((error) => {
-  displaySeedErrors(error);
+  displayEffectErrors(error);
 });

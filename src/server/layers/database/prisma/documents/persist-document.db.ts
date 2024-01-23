@@ -1,6 +1,6 @@
 import { prisma, tryQuery } from '../internal';
 
-export interface DocumentInput {
+export interface PersistDocumentInput {
   name: string;
   description?: string;
   month?: number;
@@ -11,7 +11,7 @@ export interface DocumentInput {
   height: number;
 }
 
-export const persistDocument = (data: DocumentInput) =>
+export const persistDocument = (data: PersistDocumentInput) =>
   tryQuery(
     prisma.document.create({
       data,

@@ -4,11 +4,8 @@ import { Effect, pipe } from 'effect';
 import { Button, Card, Input, NewPasswordInput } from '@client/components';
 import { useForm, useRedirectTo } from '@client/hooks';
 import { safeRedirect } from '@client/logic';
-import {
-  createUserSession,
-  createUserTask,
-  redirectLoggedUser,
-} from '@domains/auth';
+import { createUserSession, redirectLoggedUser } from '@domains/auth';
+import { createUserTask } from '@domains/users';
 import { effectAction, effectLoader, handleForm } from '@effects';
 import { PrismaDatabaseLayerLive } from '@layers';
 
@@ -24,7 +21,7 @@ export const action = effectAction(({ request }) =>
         handleForm<SignupForm>(request, signupFormResolver),
       );
 
-      const user = yield* _(createUserTask(data));
+      const user = yield* _(createUserTask({ ...data, emailVerified: false }));
       return yield* _(
         createUserSession({
           redirectTo: safeRedirect(data.redirectTo, '/'),
