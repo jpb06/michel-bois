@@ -9,6 +9,9 @@ import { createUserTask } from '@domains/users';
 import { effectAction, effectLoader, handleForm } from '@effects';
 import { PrismaDatabaseLayerLive } from '@layers';
 
+import { splashScreenState } from '../../client/state/background.atom';
+import { useBackground } from '../../client/state/useBackground';
+
 import type { SignupForm } from './logic/signup-form.logic';
 import { signupFormResolver } from './logic/signup-form.logic';
 
@@ -35,6 +38,8 @@ export const action = effectAction(({ request }) =>
 );
 
 const SignupPage = () => {
+  useBackground(splashScreenState);
+
   const { control, onSubmit } = useForm<SignupForm>(signupFormResolver, {
     name: '',
     email: '',
@@ -47,29 +52,31 @@ const SignupPage = () => {
   };
 
   return (
-    <Card>
-      <Form
-        method="post"
-        action="/signup"
-        onSubmit={handleSubmit}
-        className="flex min-w-80 flex-col items-center"
-      >
-        <h1 className="prose prose-2xl mb-1 w-full text-center text-teal-600">
-          Signup
-        </h1>
-        <Input topLeftLabel="Name" name="name" control={control} />
-        <Input topLeftLabel="Email" name="email" control={control} />
-        <NewPasswordInput
-          control={control}
-          topLeftLabel="Password"
-          name="password"
-        />
-        <input type="hidden" name="redirectTo" value={redirectTo} />
-        <div className="flew-row mt-5 flex w-full justify-end">
-          <Button className="btn-accent">Create account</Button>
-        </div>
-      </Form>
-    </Card>
+    <div className="self-center">
+      <Card>
+        <Form
+          method="post"
+          action="/signup"
+          onSubmit={handleSubmit}
+          className="flex min-w-80 flex-col items-center"
+        >
+          <h1 className="prose prose-2xl mb-1 w-full text-center text-teal-600">
+            Signup
+          </h1>
+          <Input topLeftLabel="Name" name="name" control={control} />
+          <Input topLeftLabel="Email" name="email" control={control} />
+          <NewPasswordInput
+            control={control}
+            topLeftLabel="Password"
+            name="password"
+          />
+          <input type="hidden" name="redirectTo" value={redirectTo} />
+          <div className="flew-row mt-5 flex w-full justify-end">
+            <Button className="btn-accent">Create account</Button>
+          </div>
+        </Form>
+      </Card>
+    </div>
   );
 };
 

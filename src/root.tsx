@@ -9,6 +9,7 @@ import {
   ScrollRestoration,
 } from '@remix-run/react';
 import { Effect, pipe } from 'effect';
+import { useAtomValue } from 'jotai';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
@@ -17,6 +18,7 @@ import { getUser } from '@domains/auth';
 import { effectLoader } from '@effects';
 import { PrismaDatabaseLayerLive } from '@layers';
 
+import { backgroundAtom } from './client/state/background.atom';
 import stylesheet from './tailwind.css';
 
 export const links: LinksFunction = () => [
@@ -32,38 +34,34 @@ export const loader = effectLoader((request) =>
   ),
 );
 
-const App = () => (
-  <html
-    lang="en"
-    className="hero min-h-screen"
-    style={{
-      background:
-        "linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)),url('/splashscreen.jpg')",
-      backgroundSize: 'cover',
-    }}
-  >
-    <head>
-      <meta charSet="utf-8" />
-      <meta name="viewport" content="width=device-width,initial-scale=1" />
-      <Meta />
-      <Links />
-    </head>
-    <body className="flex h-full w-full flex-col items-center">
-      <TopMenu />
-      <ToastContainer
-        position="top-center"
-        theme="colored"
-        limit={2}
-        closeButton={CloseButton}
-      />
-      <div className="mt-24 flex flex-col">
-        <Outlet />
-      </div>
-      <ScrollRestoration />
-      <Scripts />
-      <LiveReload />
-    </body>
-  </html>
-);
+const App = () => {
+  const { style } = useAtomValue(backgroundAtom);
+
+  return (
+    <html lang="en" className="hero min-h-screen" style={style}>
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <Meta />
+        <Links />
+      </head>
+      <body className="flex h-full w-full flex-col items-center">
+        <TopMenu />
+        <ToastContainer
+          position="top-center"
+          theme="colored"
+          limit={2}
+          closeButton={CloseButton}
+        />
+        <div className="mt-24 flex w-full flex-col px-5">
+          <Outlet />
+        </div>
+        <ScrollRestoration />
+        <Scripts />
+        <LiveReload />
+      </body>
+    </html>
+  );
+};
 
 export default App;

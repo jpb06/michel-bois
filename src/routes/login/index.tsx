@@ -15,6 +15,9 @@ import {
 import { effectAction, effectLoader, handleForm } from '@effects';
 import { PrismaDatabaseLayerLive } from '@layers';
 
+import { splashScreenState } from '../../client/state/background.atom';
+import { useBackground } from '../../client/state/useBackground';
+
 import { LoginIconStatus } from './children/LoginIconStatus';
 import { SignupLink } from './children/SignupLink';
 import { useCloseToastOnInputChange } from './hooks/useCloseToastOnInputChange';
@@ -53,6 +56,8 @@ export const action = effectAction(({ request }) =>
 );
 
 const LoginPage = () => {
+  useBackground(splashScreenState);
+
   const { watch, control, onSubmit } = useForm<LoginForm>(loginFormResolver, {
     email: '',
     password: '',
@@ -67,31 +72,33 @@ const LoginPage = () => {
   };
 
   return (
-    <Card>
-      <Form
-        method="post"
-        action="/login"
-        onSubmit={handleSubmit}
-        className="flex flex-col items-center"
-      >
-        <h1 className="prose prose-2xl mb-1 w-full text-center text-teal-600">
-          Login
-        </h1>
-        <LoginIconStatus />
-        <Input topLeftLabel="Email" name="email" control={control} />
-        <Input
-          topLeftLabel="Password"
-          type="password"
-          name="password"
-          control={control}
-        />
-        <input type="hidden" name="redirectTo" value={redirectTo} />
-        <div className="flew-row mt-5 flex w-full items-center justify-between gap-3">
-          <SignupLink />
-          <Button className="btn-accent">Login</Button>
-        </div>
-      </Form>
-    </Card>
+    <div className="self-center">
+      <Card className="w-96">
+        <Form
+          method="post"
+          action="/login"
+          onSubmit={handleSubmit}
+          className="flex flex-col items-center"
+        >
+          <h1 className="prose prose-2xl mb-1 w-full text-center text-teal-600">
+            Login
+          </h1>
+          <LoginIconStatus />
+          <Input topLeftLabel="Email" name="email" control={control} />
+          <Input
+            topLeftLabel="Password"
+            type="password"
+            name="password"
+            control={control}
+          />
+          <input type="hidden" name="redirectTo" value={redirectTo} />
+          <div className="flew-row mt-5 flex w-full items-center justify-between gap-3">
+            <SignupLink />
+            <Button className="btn-accent">Login</Button>
+          </div>
+        </Form>
+      </Card>
+    </div>
   );
 };
 
