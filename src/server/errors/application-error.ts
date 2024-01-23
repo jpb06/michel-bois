@@ -1,4 +1,16 @@
-export type ErrorCode = 'GetAwsSignedUrlError' | 'UploadFileError';
+export type ErrorCode =
+  | 'GetAwsSignedUrlError'
+  | 'UploadFileError'
+  | 'SeedFileNotFound'
+  | 'SqipError'
+  | 'SharpError'
+  | 'FetchError'
+  | 'ArgonHashError'
+  | 'ArgonVerifyError'
+  | 'SessionStorageError'
+  | 'GlobError'
+  | 'FormError'
+  | 'SeedDocumentOrphanFound';
 
 export class AppError {
   readonly _tag = 'AppError';
@@ -9,6 +21,7 @@ export class AppError {
   constructor(
     code: ErrorCode,
     readonly error?: unknown,
+    readonly customMessage?: string,
   ) {
     if (error instanceof Error) {
       this.message = error.stack;
@@ -19,8 +32,8 @@ export class AppError {
     this.errorCode = code;
   }
 
-  public static new(code: ErrorCode) {
-    return new AppError(code, new Error(code));
+  public static new(code: ErrorCode, customMessage?: string) {
+    return new AppError(code, new Error(code), customMessage);
   }
 
   public static fromError(code: ErrorCode) {

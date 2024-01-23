@@ -3,7 +3,7 @@ import { Context } from 'effect';
 
 import type { AppError } from '../../../errors/application-error';
 import { tapLayer } from '../../effects/tapLayer.effect';
-import type { UploadFileArgs } from '../r2/implementations';
+import type { UploadFileInput } from '../r2/implementations';
 import type { Bucket } from '../r2/types/bucket.type';
 
 export interface FileStorage {
@@ -12,7 +12,7 @@ export interface FileStorage {
     bucket: Bucket,
   ) => Effect.Effect<never, AppError | ConfigError.ConfigError, string>;
   readonly uploadFile: (
-    args: UploadFileArgs,
+    input: UploadFileInput,
   ) => Effect.Effect<never, unknown, void>;
 }
 
@@ -23,6 +23,6 @@ export const FileStorageLayer = {
     tapLayer(FileStorageLayerContext, ({ getFileUrl }) =>
       getFileUrl(fileName, bucket),
     ),
-  uploadFile: (args: UploadFileArgs) =>
-    tapLayer(FileStorageLayerContext, ({ uploadFile }) => uploadFile(args)),
+  uploadFile: (input: UploadFileInput) =>
+    tapLayer(FileStorageLayerContext, ({ uploadFile }) => uploadFile(input)),
 };

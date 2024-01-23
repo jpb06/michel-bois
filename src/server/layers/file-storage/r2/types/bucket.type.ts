@@ -1,1 +1,1 @@
-export type Bucket = 'assets' | 'placeholders';
+export type Bucket = 'assets';

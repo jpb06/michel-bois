@@ -2,7 +2,7 @@ import { Effect } from 'effect';
 
 import { DatabaseLayer } from '@layers';
 
-import { validatePassword } from './logic/validate-password.server';
+import { validatePassword } from '../password/validate-password.server';
 
 export const verifyLoginTask = (email: string, password: string) =>
   Effect.gen(function* (_) {

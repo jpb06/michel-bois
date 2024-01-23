@@ -20,12 +20,15 @@
       "@client/hooks": ["./client/hooks/index.ts"],
       "@client/logic": ["./client/logic/index.ts"],
       "@client/motion": ["./client/motion/index.ts"],
+      "@client/state": ["./client/state/index.ts"],
       "@client/types": ["./client/types/index.ts"],
       "@effects": ["./server/effect/index.server.ts"],
       "@domains/auth": ["./server/domains/auth/index.server.ts"],
+      "@domains/documents": ["./server/domains/documents/index.server.ts"],
+      "@domains/users": ["./server/domains/users/index.server.ts"],
+      "@domains/seeding": ["./server/domains/seeding/index.server.ts"],
       "@layers": ["./server/layers/index.server.ts"],
-      "@layers/types": ["./server/layers/types.server.ts"],
-      "@data-seeding": ["./server/data-seeding/index.server.ts"]
+      "@layers/types": ["./server/layers/types.server.ts"]
     },
     "skipLibCheck": true,
     // Remix takes care of building everything in `remix build`.

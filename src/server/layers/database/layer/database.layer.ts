@@ -4,8 +4,9 @@ import { Context } from 'effect';
 import { UserId } from 'common/zod.types';
 
 import { tapLayer } from '../../effects/tapLayer.effect';
+import { getDocuments } from '../prisma/documents/get-documents.db';
 import type {
-  DocumentInput,
+  PersistDocumentInput,
   persistDocument,
 } from '../prisma/documents/persist-document.db';
 import type { DbError } from '../prisma/internal/try-query.effect';
@@ -24,6 +25,7 @@ export interface Database {
   findUserByEmail: typeof findUserByEmail;
   countUsers: typeof countUsers;
   // documents
+  getDocuments: typeof getDocuments;
   persistDocument: typeof persistDocument;
   //
 }
@@ -46,7 +48,8 @@ export const DatabaseLayer = {
   },
   // -----------------------------------------------------------------------
   documents: {
-    persist: (data: DocumentInput) =>
+    get: () => tapLayer(DatabaseLayerContext, (db) => db.getDocuments()),
+    create: (data: PersistDocumentInput) =>
       tapLayer(DatabaseLayerContext, (db) => db.persistDocument(data)),
   },
   // -----------------------------------------------------------------------

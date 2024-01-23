@@ -4,4 +4,4 @@ export * from './session/create-user-session.server';
 export * from './session/redirect-logged-user.server';
 
 export * from './verify-login/verify-login.server';
-export * from './create-user/create-user.server';
+export * from './password/hash-password.server';

@@ -5,7 +5,8 @@ import { UserId } from 'common/zod.types';
 
 import { DatabaseLayerContext } from '../layer/database.layer';
 
-import type { DocumentInput } from './documents/persist-document.db';
+import { getDocuments } from './documents/get-documents.db';
+import type { PersistDocumentInput } from './documents/persist-document.db';
 import { persistDocument } from './documents/persist-document.db';
 import { prisma } from './internal/prisma.instance';
 import { tryQuery } from './internal/try-query.effect';
@@ -30,7 +31,8 @@ export const PrismaDatabaseLayerLive = Layer.succeed(
     countUsers: () => countUsers(),
     // -----------------------------------------------------------------------
     // Documents
-    persistDocument: (data: DocumentInput) => persistDocument(data),
+    getDocuments: () => getDocuments(),
+    persistDocument: (data: PersistDocumentInput) => persistDocument(data),
     // -----------------------------------------------------------------------
     //
   }),
