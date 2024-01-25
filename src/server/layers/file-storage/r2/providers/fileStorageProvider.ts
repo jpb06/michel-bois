@@ -31,6 +31,3 @@ export const fileStorageProvider = pipe(
 );
 
 export const assetsBucket = Config.string('R2_DOCUMENT_ASSETS_BUCKET_NAME');
-export const placeholdersBucket = Config.string(
-  'R2_DOCUMENT_PLACEHOLDERS_BUCKET_NAME',
-);

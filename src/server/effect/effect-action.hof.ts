@@ -2,6 +2,8 @@ import { ActionFunctionArgs, json } from '@remix-run/server-runtime';
 import { Effect, pipe } from 'effect';
 import { FieldValues } from 'react-hook-form';
 
+import { displayEffectErrors } from '@effects';
+
 import { ValidationError } from './handle-form';
 
 export const effectAction =
@@ -20,4 +22,12 @@ export const effectAction =
           return Effect.succeed(json(meta));
         }),
       ),
-    );
+    ).catch((error) => {
+      displayEffectErrors(error);
+
+      return json({
+        source: actionArgs.request.url,
+        error: 'An error occurred',
+        //status: 500,
+      });
+    });

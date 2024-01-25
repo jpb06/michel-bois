@@ -2,6 +2,8 @@ import { Effect } from 'effect';
 import { FieldErrors, FieldValues, Resolver } from 'react-hook-form';
 import { getValidatedFormData } from 'remix-hook-form';
 
+import { tryPromise } from '@effects';
+
 export class ValidationError<T extends FieldValues> {
   readonly _tag = 'ValidationError';
 
@@ -21,7 +23,7 @@ export const handleForm = <T extends FieldValues>(
       data,
       receivedValues: defaultValues,
     } = yield* _(
-      Effect.tryPromise(() => getValidatedFormData<T>(request, resolver)),
+      tryPromise(getValidatedFormData<T>(request, resolver), 'FormError'),
     );
 
     if (errors) {
