@@ -1,8 +1,10 @@
 import { Effect, pipe } from 'effect';
 
+import { tryPromise } from '@effects';
+
 export const fetchRoot = (url: URL) =>
   pipe(
-    Effect.tryPromise(() => fetch(url.toString(), { method: 'HEAD' })),
+    tryPromise(fetch(url.toString(), { method: 'HEAD' }), 'FetchError'),
     Effect.flatMap((r) => {
       if (!r.ok) {
         return Effect.fail(r);
