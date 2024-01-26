@@ -17,5 +17,5 @@ export const effectLoader =
         source: request.url,
         error: 'An error occurred',
         status: 500,
-      });
+      }) as never;
     });

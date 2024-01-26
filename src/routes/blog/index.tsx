@@ -1,5 +1,3 @@
-import { Card } from '@client/components';
-
-const Blog = () => <Card>Blog</Card>;
+const Blog = () => null;
 
 export default Blog;
