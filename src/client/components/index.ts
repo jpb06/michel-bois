@@ -6,3 +6,4 @@ export * from './top-menu/TopMenu';
 export * from './new-password-input/NewPasswordInput';
 export * from './card/Card';
 export * from './card/BaseCard';
+export * from './image/Image';

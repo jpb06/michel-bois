@@ -10,7 +10,7 @@ export const BaseCard = ({
 }: PropsWithChildren<PropsWithClassName>) => (
   <motion.div
     className={`rainbow-gradiant-border rounded-3xl p-[3px] opacity-90 hover:opacity-95 ${className ? className : ''}`}
-    whileHover={{ scale: 1.009 }}
+    whileHover={{ scale: 1.011 }}
     whileTap={{ scale: 1.007 }}
     transition={defaultTransition}
   >
