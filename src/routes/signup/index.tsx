@@ -2,15 +2,12 @@ import { Form } from '@remix-run/react';
 import { Effect, pipe } from 'effect';
 
 import { Button, Card, Input, NewPasswordInput } from '@client/components';
-import { useForm, useRedirectTo } from '@client/hooks';
+import { useForm, useRedirectTo, usePageStyle } from '@client/hooks';
 import { safeRedirect } from '@client/logic';
 import { createUserSession, redirectLoggedUser } from '@domains/auth';
 import { createUserTask } from '@domains/users';
 import { effectAction, effectLoader, handleForm } from '@effects';
 import { PrismaDatabaseLayerLive } from '@layers';
-
-import { splashScreenState } from '../../client/state/background.atom';
-import { useBackground } from '../../client/state/useBackground';
 
 import type { SignupForm } from './logic/signup-form.logic';
 import { signupFormResolver } from './logic/signup-form.logic';
@@ -38,7 +35,10 @@ export const action = effectAction(({ request }) =>
 );
 
 const SignupPage = () => {
-  useBackground(splashScreenState);
+  usePageStyle({
+    background: 'image',
+    wrapper: 'padding',
+  });
 
   const { control, onSubmit } = useForm<SignupForm>(signupFormResolver, {
     name: '',

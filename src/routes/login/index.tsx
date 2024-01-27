@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { v4 as uuid } from 'uuid';
 
 import { Button, Card, Input } from '@client/components';
-import { useForm, useRedirectTo } from '@client/hooks';
+import { useForm, useRedirectTo, usePageStyle } from '@client/hooks';
 import { safeRedirect } from '@client/logic';
 import {
   createUserSession,
@@ -14,9 +14,6 @@ import {
 } from '@domains/auth';
 import { effectAction, effectLoader, handleForm } from '@effects';
 import { PrismaDatabaseLayerLive } from '@layers';
-
-import { splashScreenState } from '../../client/state/background.atom';
-import { useBackground } from '../../client/state/useBackground';
 
 import { LoginIconStatus } from './children/LoginIconStatus';
 import { SignupLink } from './children/SignupLink';
@@ -56,7 +53,10 @@ export const action = effectAction(({ request }) =>
 );
 
 const LoginPage = () => {
-  useBackground(splashScreenState);
+  usePageStyle({
+    background: 'image',
+    wrapper: 'padding',
+  });
 
   const { watch, control, onSubmit } = useForm<LoginForm>(loginFormResolver, {
     email: '',
