@@ -14,11 +14,11 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
 import { CloseButton, TopMenu } from '@client/components';
+import { pageStyleAtom } from '@client/state';
 import { getUser } from '@domains/auth';
 import { effectLoader } from '@effects';
 import { PrismaDatabaseLayerLive } from '@layers';
 
-import { backgroundAtom } from './client/state/background.atom';
 import stylesheet from './tailwind.css';
 
 export const links: LinksFunction = () => [
@@ -35,10 +35,14 @@ export const loader = effectLoader((request) =>
 );
 
 const App = () => {
-  const { style } = useAtomValue(backgroundAtom);
+  const { backgroundStyle, wrapperClassName } = useAtomValue(pageStyleAtom);
 
   return (
-    <html lang="en" className="hero min-h-screen" style={style}>
+    <html
+      lang="en"
+      className="animate-fade-in hero min-h-screen"
+      style={backgroundStyle}
+    >
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -53,7 +57,7 @@ const App = () => {
           limit={2}
           closeButton={CloseButton}
         />
-        <div className="mt-24 flex w-full flex-col px-5">
+        <div className={`flex w-full flex-col ${wrapperClassName}`}>
           <Outlet />
         </div>
         <ScrollRestoration />
