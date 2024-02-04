@@ -135,4 +135,5 @@ deploy/postgres-data
 /build
 /public/build
 
-/src/db-seed/common-datasets/assets/data/img
+/assets
+.DS_Store

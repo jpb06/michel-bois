@@ -4,7 +4,7 @@ import { Effect } from 'effect';
 import { readFile } from 'fs-extra';
 import sharp from 'sharp';
 
-import { tryPromise } from '@effects';
+import { SharpError, SeedError } from '@errors';
 
 export const compressFile = (fileName: string) =>
   Effect.gen(function* (_) {
@@ -13,7 +13,12 @@ export const compressFile = (fileName: string) =>
       `./../../../seeding/documents/data/img/${fileName}`,
     );
 
-    const data = yield* _(tryPromise(readFile(filePath), 'SeedFileNotFound'));
+    const data = yield* _(
+      Effect.tryPromise({
+        try: () => readFile(filePath),
+        catch: (e) => SeedError.from(e, 'SeedFileNotFound'),
+      }),
+    );
 
     const sharpImage = sharp(data)
       .resize({
@@ -24,8 +29,14 @@ export const compressFile = (fileName: string) =>
     return yield* _(
       Effect.all(
         [
-          tryPromise(sharpImage.toBuffer(), 'SharpError'),
-          tryPromise(sharpImage.metadata(), 'SharpError'),
+          Effect.tryPromise({
+            try: () => sharpImage.toBuffer(),
+            catch: (e) => SharpError.from(e),
+          }),
+          Effect.tryPromise({
+            try: () => sharpImage.metadata(),
+            catch: (e) => SharpError.from(e),
+          }),
         ],
         { concurrency: 'unbounded' },
       ),

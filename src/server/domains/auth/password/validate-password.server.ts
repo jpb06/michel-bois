@@ -1,6 +1,10 @@
 import { verify } from 'argon2';
+import { Effect } from 'effect';
 
-import { tryPromise } from '@effects';
+import { CryptoError } from '@errors';
 
 export const validatePassword = (hash: string, claim: string) =>
-  tryPromise(verify(hash, claim), 'ArgonVerifyError');
+  Effect.tryPromise({
+    try: () => verify(hash, claim),
+    catch: (e) => CryptoError.from(e),
+  });

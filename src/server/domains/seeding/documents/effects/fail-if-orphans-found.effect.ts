@@ -1,6 +1,7 @@
 import { Effect } from 'effect';
 
-import { AppError } from '../../../../errors/application-error';
+import { SeedError } from '@errors';
+
 import { documentsSeedData } from '../data/documents.data';
 
 const getOrphans = (files: string[]) =>
@@ -20,7 +21,9 @@ export const failIfOrphansFound = (files: string[]) =>
     if (orphans.length > 0) {
       return yield* _(
         Effect.fail(
-          AppError.new('SeedDocumentOrphanFound', getErrorMessage(orphans)),
+          SeedError.new(
+            `SeedDocumentOrphanFound - ${getErrorMessage(orphans)}`,
+          ),
         ),
       );
     }

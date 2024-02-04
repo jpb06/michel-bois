@@ -1,4 +1,4 @@
-import { UserId } from 'common/zod.types';
+import { UserId } from '@common/types';
 
 import { prisma, tryQuery } from '../internal';
 

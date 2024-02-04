@@ -1,7 +1,8 @@
 import type { ConfigError, Effect } from 'effect';
 import { Context } from 'effect';
 
-import type { AppError } from '../../../errors/application-error';
+import type { FileStorageError } from '@errors';
+
 import { tapLayer } from '../../effects/tapLayer.effect';
 import type { UploadFileInput } from '../r2/implementations';
 import type { Bucket } from '../r2/types/bucket.type';
@@ -10,10 +11,10 @@ export interface FileStorage {
   readonly getFileUrl: (
     fileName: string,
     bucket: Bucket,
-  ) => Effect.Effect<never, AppError | ConfigError.ConfigError, string>;
+  ) => Effect.Effect<never, FileStorageError | ConfigError.ConfigError, string>;
   readonly uploadFile: (
     input: UploadFileInput,
-  ) => Effect.Effect<never, unknown, void>;
+  ) => Effect.Effect<never, FileStorageError | ConfigError.ConfigError, void>;
 }
 
 export const FileStorageLayerContext = Context.Tag<FileStorage>();

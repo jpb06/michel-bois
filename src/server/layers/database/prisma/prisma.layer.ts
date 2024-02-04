@@ -1,7 +1,7 @@
 import type { Prisma } from '@prisma/client';
 import { Layer } from 'effect';
 
-import { UserId } from 'common/zod.types';
+import { UserId } from '@common/types';
 
 import { DatabaseLayerContext } from '../layer/database.layer';
 
