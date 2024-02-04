@@ -1,3 +1,10 @@
+const pathAliases = {
+  pattern:
+    '{@common/**,@errors,@client/**,@effects,@domains/**,@layers,@layers/types,@data-seeding}',
+  regex:
+    '^@(client/|@errors|@effects|@domains/|@layers|@layers/types|@common/|@data-seeding)',
+};
+
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
   root: true,
@@ -52,8 +59,7 @@ module.exports = {
             'newlines-between': 'always',
             pathGroups: [
               {
-                pattern:
-                  '{@client/**,@effects,@domains/**,@layers,@layers/types,@data-seeding}',
+                pattern: pathAliases.pattern,
                 group: 'internal',
                 position: 'before',
               },
@@ -110,8 +116,7 @@ module.exports = {
       extends: ['plugin:import/typescript'],
       parser: '@typescript-eslint/parser',
       settings: {
-        'import/internal-regex':
-          '^@(client/|@effects|@domains/|@layers|@layers/types|@data-seeding)',
+        'import/internal-regex': pathAliases.regex,
         'import/resolver': {
           node: {
             extensions: ['.ts', '.tsx'],
@@ -138,8 +143,7 @@ module.exports = {
             'newlines-between': 'always',
             pathGroups: [
               {
-                pattern:
-                  '{@client/**,@effects,@domains/**,@layers,@layers/types,@data-seeding}',
+                pattern: pathAliases.pattern,
                 group: 'internal',
                 position: 'before',
               },

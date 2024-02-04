@@ -14,7 +14,7 @@ const getR2Config = pipe(
   })),
 );
 
-export const fileStorageProvider = pipe(
+export const r2FileStorageProvider = pipe(
   getR2Config,
   Effect.flatMap((config) =>
     Effect.succeed(
@@ -30,4 +30,4 @@ export const fileStorageProvider = pipe(
   ),
 );
 
-export const assetsBucket = Config.string('R2_DOCUMENT_ASSETS_BUCKET_NAME');
+export const r2AssetsBucket = Config.string('R2_DOCUMENT_ASSETS_BUCKET_NAME');

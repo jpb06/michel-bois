@@ -1,7 +1,7 @@
 import { redirect } from '@remix-run/server-runtime';
 import { Effect } from 'effect';
 
-import { tryPromise } from '@effects';
+import { SessionError } from '@errors';
 
 import { getSession } from './get-session.server';
 import { sessionStorage } from './session-storage.server';
@@ -11,7 +11,10 @@ export const logout = (request: Request) =>
     const session = yield* _(getSession(request));
 
     const cookie = yield* _(
-      tryPromise(sessionStorage.destroySession(session), 'SessionStorageError'),
+      Effect.tryPromise({
+        try: () => sessionStorage.destroySession(session),
+        catch: (e) => SessionError.from(e),
+      }),
     );
 
     return redirect('/', {

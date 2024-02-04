@@ -1,12 +1,14 @@
+import { Effect } from 'effect';
 import { glob } from 'glob';
 
-import { tryPromise } from '@effects';
+import { GlobError } from '@errors';
 
 export const getFolderFiles = (path: string) =>
-  tryPromise(
-    glob(path, {
-      cwd: __dirname,
-      nodir: true,
-    }),
-    'GlobError',
-  );
+  Effect.tryPromise({
+    try: () =>
+      glob(path, {
+        cwd: __dirname,
+        nodir: true,
+      }),
+    catch: (e) => GlobError.from(e),
+  });

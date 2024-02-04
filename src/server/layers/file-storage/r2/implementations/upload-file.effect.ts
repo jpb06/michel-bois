@@ -1,9 +1,9 @@
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { Effect } from 'effect';
 
-import { tryPromise } from '@effects';
+import { FileStorageError } from '@errors';
 
-import { fileStorageProvider } from '../providers/fileStorageProvider';
+import { r2FileStorageProvider } from '../providers/r2-file-storage.provider';
 import type { Bucket } from '../types/bucket.type';
 
 import { getBucket } from './get-bucket.effect';
@@ -23,22 +23,23 @@ export const uploadFile = ({
 }: UploadFileInput) =>
   Effect.gen(function* (_) {
     const [provider, bucket] = yield* _(
-      Effect.all([fileStorageProvider, getBucket(bucketName)], {
+      Effect.all([r2FileStorageProvider, getBucket(bucketName)], {
         concurrency: 'unbounded',
       }),
     );
 
     yield* _(
-      tryPromise(
-        provider.send(
-          new PutObjectCommand({
-            Body: data,
-            ContentType: contentType,
-            Key: key,
-            Bucket: bucket,
-          }),
-        ),
-        'UploadFileError',
-      ),
+      Effect.tryPromise({
+        try: () =>
+          provider.send(
+            new PutObjectCommand({
+              Body: data,
+              ContentType: contentType,
+              Key: key,
+              Bucket: bucket,
+            }),
+          ),
+        catch: (e) => FileStorageError.from(e),
+      }),
     );
   });

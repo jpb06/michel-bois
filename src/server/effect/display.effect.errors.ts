@@ -12,6 +12,7 @@ interface Cause {
     _tag: string;
     path: string[];
     message: string;
+    additionalMessage?: string;
     errorCode?: string;
     stack?: string;
     error?: unknown;
@@ -51,18 +52,34 @@ export const displayEffectErrors = (error: unknown) => {
       `${failures.length} error${failures.length > 1 ? 's' : ''} occurred\n`,
     )}`,
   );
-
-  for (const { _tag, errorCode, message } of failures) {
+  for (const {
+    _tag,
+    errorCode,
+    message,
+    additionalMessage,
+    stack,
+  } of failures) {
     console.error(
       `❌ ${chalk.bold.bgRedBright(
         ` ${_tag} ${errorCode ? `- ${errorCode} ` : ''}`,
       )}`,
     );
-
-    const stack = cleanupStack(message);
-
     console.error(
-      `${chalk.hex('#a37e3e')(`├─${stack.slice(0, 1).join('\n├─')}\n╰─${stack.slice(-1)}`)}\n`,
+      `${chalk.hex('#a37e3e')('│')}   ${chalk.bold.whiteBright(message)}`,
     );
+    if (additionalMessage !== undefined) {
+      console.error(
+        `${chalk.hex('#a37e3e')('│')}   ${chalk.bold.whiteBright(additionalMessage)}`,
+      );
+    }
+
+    if (stack) {
+      const cleanedUpStack = cleanupStack(stack);
+
+      console.error(chalk.hex('#a37e3e')('│'));
+      console.error(
+        `${chalk.hex('#a37e3e')(`├─${cleanedUpStack.slice(0, 1).join('\n├─')}\n╰─${cleanedUpStack.slice(-1)}`)}\n`,
+      );
+    }
   }
 };

@@ -1,7 +1,7 @@
 import { redirect } from '@remix-run/node';
 import { Effect } from 'effect';
 
-import { tryPromise } from '@effects';
+import { SessionError } from '@errors';
 
 import { userSessionKey } from './constants/user-session-key.constant';
 import { getSession } from './get-session.server';
@@ -23,12 +23,13 @@ export const createUserSession = ({
     session.set(userSessionKey, userId);
 
     const cookie = yield* _(
-      tryPromise(
-        sessionStorage.commitSession(session, {
-          maxAge: 60 * 60 * 24 * 7,
-        }),
-        'SessionStorageError',
-      ),
+      Effect.tryPromise({
+        try: () =>
+          sessionStorage.commitSession(session, {
+            maxAge: 60 * 60 * 24 * 7,
+          }),
+        catch: (e) => SessionError.from(e),
+      }),
     );
 
     return redirect(redirectTo, {

@@ -1,6 +1,6 @@
 import { Effect } from 'effect';
 
-import { UserId } from 'common/zod.types';
+import { UserId } from '@common/types';
 
 import { userSessionKey } from './constants/user-session-key.constant';
 import { getSession } from './get-session.server';

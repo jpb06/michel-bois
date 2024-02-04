@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as zod from 'zod';
 
-import { zodPassword } from '../../../common/zod.types';
+import { zodPassword } from '@common/types';
 
 export const signupFormSchema = zod.object({
   name: zod.string().min(3, {

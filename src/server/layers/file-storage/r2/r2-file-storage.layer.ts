@@ -1,6 +1,6 @@
 import { Layer } from 'effect';
 
-import { FileStorageLayerContext } from '../layer/fileStorage.layer';
+import { FileStorageLayerContext } from '../layer/file-storage.layer';
 
 import { getFileUrl, uploadFile } from './implementations';
 

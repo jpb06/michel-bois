@@ -1,6 +1,6 @@
 import { Effect } from 'effect';
 
-import { tryPromise } from '@effects';
+import { SessionError } from '@errors';
 
 import { sessionStorage } from './session-storage.server';
 
@@ -9,6 +9,9 @@ export const getSession = (request: Request) =>
     const cookie = request.headers.get('Cookie');
 
     return yield* _(
-      tryPromise(sessionStorage.getSession(cookie), 'SessionStorageError'),
+      Effect.tryPromise({
+        try: () => sessionStorage.getSession(cookie),
+        catch: (e) => SessionError.from(e),
+      }),
     );
   });
